@@ -71,7 +71,10 @@ if args.file_load:
         for x in json_lines:
             if("Host" in x):
                 name = x["Host"].upper()+"."+args.domain.upper()
-                user = x["User"].split("@")[0]+"@"+args.domain.upper()
+                if "@" in x["User"]:
+                    user = x["User"].upper().split("@")[0]+"@"+args.domain.upper()
+                else:
+                    user = x["User"].upper()+"@"+args.domain.upper()
                 node_computer=matcher.match("Computer", name=name).first()
                 node_user=matcher.match("User", name=user).first()
                 if node_user and node_computer:
